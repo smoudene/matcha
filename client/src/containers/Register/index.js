@@ -6,8 +6,6 @@ import {reduxForm } from 'redux-form';
 const validate = (values) => {
     const errors = {};
     const requiredFields = [
-        'firstname',
-        'lastname',
         'username',
         'email',
         'password',

@@ -23,7 +23,10 @@ const tags = [
   },
 ];
 
-export default function Infos() {
+export default function Infos(props) {
+
+  const { handleSubmit} = props;
+
   const [value, setValue] = React.useState("female");
 
   const handleGenderChange = (event) => {
@@ -46,6 +49,7 @@ export default function Infos() {
           <Grid item sm={6}>
             <TextField
               label="First Name"
+              name ="first_name"
               color="secondary"
               className="infosInputs"
             />
@@ -53,6 +57,7 @@ export default function Infos() {
           <Grid item sm={6}>
             <TextField
               label="Last Name"
+              name ="first_name"
               color="secondary"
               className="infosInputs"
             />
@@ -62,6 +67,7 @@ export default function Infos() {
           <Grid item sm={6}>
             <TextField
               label="Username"
+              name ="p_username"
               color="secondary"
               className="infosInputs"
             />
@@ -69,6 +75,7 @@ export default function Infos() {
           <Grid item sm={6}>
             <TextField
               label="Email"
+              name ="p_email"
               color="secondary"
               className="infosInputs"
             />
@@ -162,6 +169,7 @@ export default function Infos() {
         <Grid item sm={6} >
         <TextField
           label="New Password"
+          name ="pass"
           type="password"
           color="secondary"
           className="infosInputs"
@@ -171,9 +179,15 @@ export default function Infos() {
         <TextField
           label="Confirm New Password"
           type="password"
+          name ="cpass"
           color="secondary"
           className="infosInputs"
         /></Grid>
+        <button variant="contained"
+                    color="secondary"
+                    onClick={handleSubmit}>
+                      confirm
+        </button>
       </Grid>
     </div>
   );

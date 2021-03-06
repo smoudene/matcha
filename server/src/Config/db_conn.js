@@ -7,17 +7,5 @@ const con = mysql.createConnection({
     password: "tibicha",
     database: "matcha",
 });
-// con.connect(function (err) {
-//     if (err) throw err;
-//     console.log("Connected!");
 
-// });
-
-// app.get('/',(req,res)=>{
-//     con.query('CREATE DATABASE IF NOT EXISTS db_matcha',(err,result)=>{
-//         if (err)
-//             console.log(err)
-//     })
-//     res.send("running !")
-// })
 module.exports = con;
