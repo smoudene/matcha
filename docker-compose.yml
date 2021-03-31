@@ -1,5 +1,25 @@
 version: "3.1"
 services:
+    # server:
+    #     build: ./server
+    #     ports: 
+    #         - "3001:3001"
+    #         - "443:443"
+    #     volumes:
+    #         - ./server:/usr/src/app
+    #     depends_on:
+    #         - db
+    #     links:
+    #         - db
+    #     restart: on-failure
+    #     networks:
+    #         - default
+    # client:
+    #     build: ./client
+    #     ports: 
+    #         - "8080:8080"
+    #     volumes:
+    #         - ./client:/usr/src/client
     db:
         build: ./db
         ports: 
@@ -21,6 +41,6 @@ services:
             - 8000:80
         environment:
             MYSQL_USER: tibicha
-            MYSQL_PASSWORD: tibicha
+            MYSQL_PASSWORD: tibic
 volumes:
     persistent:

@@ -42,14 +42,18 @@
 }
 
 .logupImage {
-  width: 90%!important;
+  width: 60%;
   height: auto;
-  animation: fading 3s;
+  animation: fadeIn 1s;
+  transition: width 1s;
 }
 
+.imageContainer:hover .logupImage{
+  width: 90%;
+}
 
 .logupInput {
-  color: white;
+  color: white!important;
   margin-bottom: 7px !important;
 }
 
@@ -68,25 +72,20 @@
   color: white;
 }
 
-.logupInputLabel {
-  color: grey !important;
-}
-.logupInput {
-  color: aliceblue !important;
-}
-
 @media screen and (max-width: 1280px) {
   .imageContainer {
     border-top-left-radius: 0;
     border-bottom-left-radius: 30px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 30px;
+    padding: 30px!important;
   }
-
+  
   .inputContainer {
     border-top-left-radius: 30px;
     border-bottom-left-radius: 0;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 0;
+    padding: 30px!important;
   }
 }

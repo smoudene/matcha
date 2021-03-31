@@ -2,10 +2,10 @@ import React from "react";
 import "./signup.css";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import LogupImage from "./img/signup.svg";
+import LogupImage from "./img/loving.svg";
 import { Link } from "react-router-dom";
 import { Field } from 'redux-form';
-import renderField from '../commun/TextField';
+import renderField from '../shared/TextField';
 
 export default function signup(props) {
   const {handleSubmit} = props;
@@ -17,7 +17,7 @@ export default function signup(props) {
         justify="center"
         alignItems="center"
       >
-        <Grid item xs={7} container className="logupContainer">
+        <Grid item xs={11} lg={7} container className="logupContainer">
           <Grid
             item
             container
@@ -38,11 +38,35 @@ export default function signup(props) {
             >
               <h1 className="logo">MATCHA</h1>
               <Field
+                name="firstname"
+                className="logupInput"
+                color="secondary"
+                InputProps={{ className: "loginInput" }}
+                InputLabelProps={{ className: "loginInputLabel" }}
+                component={renderField}
+                label="First Name"
+                type="text"
+                rows='1'
+
+              />   
+              <Field
+                name="lastname"
+                className="logupInput"
+                color="secondary"
+                InputProps={{ className: "loginInput" }}
+                InputLabelProps={{ className: "loginInputLabel" }}
+                component={renderField}
+                label="Last Name"
+                type="text"
+                rows='1'
+
+              />   
+              <Field
                 name="username"
                 className="logupInput"
                 color="secondary"
-                InputProps={{ className: "logupInput" }}
-                InputLabelProps={{ className: "logupInputLabel" }}
+                InputProps={{ className: "loginInput" }}
+                InputLabelProps={{ className: "loginInputLabel" }}
                 component={renderField}
                 label="Username"
                 type="text"
@@ -58,8 +82,8 @@ export default function signup(props) {
                 rows='1'
                 className="logupInput"
                 color="secondary"
-                InputProps={{ className: "logupInput" }}
-                InputLabelProps={{ className: "logupInputLabel" }}
+                InputProps={{ className: "loginInput" }}
+                InputLabelProps={{ className: "loginInputLabel" }}
 
               />   
               <Field
@@ -70,8 +94,8 @@ export default function signup(props) {
                 rows='1'
                 color="secondary"
                 className="logupInput"
-                InputProps={{ className: "logupInput" }}
-                InputLabelProps={{ className: "logupInputLabel" }}
+                InputProps={{ className: "loginInput" }}
+                InputLabelProps={{ className: "loginInputLabel" }}
               /> 
               <Field
                 name="confirmPassword"
@@ -81,8 +105,8 @@ export default function signup(props) {
                 rows='1'
                 color="secondary"
                 className="logupInput"
-                InputProps={{ className: "logupInput" }}
-                InputLabelProps={{ className: "logupInputLabel" }}
+                InputProps={{ className: "loginInput" }}
+                InputLabelProps={{ className: "loginInputLabel" }}
               />      
               <div style={{ height: 30 }} />
               <Button variant="contained" color="primary" className="logupBtn" onClick={handleSubmit}>

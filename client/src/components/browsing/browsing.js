@@ -1,95 +1,90 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Cards from "../Cards/Cards";
 import Navbar from "../../containers/Navbar";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Axios from "axios";
+import Select from "react-select";
 import "./browsing.css";
+import { Button } from "@material-ui/core";
 
 function valuetext(value) {
   return `${value}`;
 }
 
-export default function Browsing() {
-  // const images = [
-  //   "https://images.pexels.com/photos/4886807/pexels-photo-4886807.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  //   "https://images.pexels.com/photos/5651673/pexels-photo-5651673.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  //   "https://images.pexels.com/photos/5845336/pexels-photo-5845336.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  //   "https://images.pexels.com/photos/5870286/pexels-photo-5870286.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  //   "https://images.pexels.com/photos/6470297/pexels-photo-6470297.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  //   "https://images.pexels.com/photos/3094441/pexels-photo-3094441.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  //   "https://images.pexels.com/photos/3124353/pexels-photo-3124353.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  //   "https://images.pexels.com/photos/6752270/pexels-photo-6752270.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  //   "https://images.pexels.com/photos/6533788/pexels-photo-6533788.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  //   "https://images.pexels.com/photos/6507482/pexels-photo-6507482.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-  // ];
-
-  const [imgs, setImgs] = useState([]);
-  const [rating, setRating] = useState(1);
-  const [age, setAge] = useState(20);
-
-  const handleRatingChange = (e, newRating) => {
-    setRating(newRating);
-    return newRating;
-  };
-  const handleAgeChange = (e, newAge) => {
-    setAge(newAge);
-    return newAge;
-  };
-
-  const filter = (img) => {
-    if (img.rating >= rating && img.age >= age)
-      return img;
-  }
-
-  useEffect(() => {
-    Axios.get("http://localhost:3001/browsing").then((response) => {
-      setImgs(response.data);
-    });
-  }, []);
+export default function Browsing(props) {
+  const {
+    users,
+    handle,
+    handleSubmit,
+    handleBlock,
+    handleLike,
+    handleDislike,
+    handleViewProfile,
+    handleChangeAge,
+    handleChangeLoc,
+    handleChangeRating,
+    handleChangeTags,
+    handleChangeNbrTags,
+    handleReport,
+    selectTags,
+    age,
+    nbrTags,
+    loc,
+    rating,
+  } = props;
 
   return (
     <>
       <Navbar />
-      <Grid container className="BrowsingContainer">
-        <Grid item container sm={10} className="filter" spacing={0}>
-          <Grid item sm={3}>
-            <Typography
-              id="discrete-slider"
-              gutterBottom
-              style={{ color: "red" }}
-            >
-              Rating
-            </Typography>
+      <Grid
+        container
+        className="BrowsingContainer"
+        justify="center"
+        alignItems="center"
+      >
+        <Grid item container xs={11} lg={10} className="filter" spacing={0}>
+          <Grid item xs={12} lg={2} style={{ marginRight: "60px" }}>
+            <h6 style={{ color: "#C51162" }}>
+              Rating{" "}
+              <i
+                className="fas fa-sort-up"
+                onClick={(e) => handle("-rating")}
+              ></i>{" "}
+              <i
+                className="fas fa-sort-down"
+                onClick={(e) => handle("rating")}
+              ></i>
+            </h6>
             <Slider
               value={rating}
               getAriaValueText={valuetext}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
-              onChange={handleRatingChange}
+              onChange={handleChangeRating}
               step={1}
               marks
-              min={1}
+              min={0}
               max={5}
               color="secondary"
               style={{ width: 300 }}
             />
           </Grid>
-          <Grid item sm={3}>
-            <Typography
-              id="discrete-slider"
-              gutterBottom
-              style={{ color: "red" }}
-            >
-              Age
-            </Typography>
+          <Grid item xs={12} lg={2} style={{ marginRight: "60px" }}>
+            <h6 style={{ color: "#C51162" }}>
+              Age{" "}
+              <i className="fas fa-sort-up" onClick={(e) => handle("-age")}></i>{" "}
+              <i
+                className="fas fa-sort-down"
+                onClick={(e) => handle("age")}
+              ></i>
+            </h6>
             <Slider
-              Value={age}
+              value={age}
               getAriaValueText={valuetext}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
-              onChange={handleAgeChange}
+              onChange={handleChangeAge}
               step={1}
               marks
               min={18}
@@ -98,55 +93,87 @@ export default function Browsing() {
               style={{ width: 300 }}
             />
           </Grid>
-          <Grid item sm={3}>
-            <Typography
-              id="discrete-slider"
-              gutterBottom
-              style={{ color: "red" }}
-            >
-              Localisation
-            </Typography>
+          <Grid item xs={12} lg={2} style={{ marginRight: "60px" }}>
+            <h6 style={{ color: "#C51162" }}>
+              Localisation{" "}
+              <i
+                className="fas fa-sort-up"
+                onClick={(e) => handle("-rating")}
+              ></i>{" "}
+              <i
+                className="fas fa-sort-down"
+                onClick={(e) => handle("rating")}
+              ></i>
+            </h6>
             <Slider
-              defaultValue={10}
+              value={loc}
               getAriaValueText={valuetext}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
+              onChange={handleChangeLoc}
               step={10}
               marks
-              min={10}
+              min={0}
               max={100}
               color="secondary"
               style={{ width: 300 }}
             />
           </Grid>
-          <Grid item sm={3}>
-            <Typography
-              id="discrete-slider"
-              gutterBottom
-              style={{ color: "red" }}
-            >
-              Tags
-            </Typography>
+          <Grid item xs={12} lg={2} style={{ marginRight: "60px" }}>
+            <h6 style={{ color: "#C51162" }}>
+              Number of Tags <i className="fas fa-sort-up"></i>{" "}
+              <i className="fas fa-sort-down"></i>
+            </h6>
             <Slider
-              defaultValue={10}
+              value={nbrTags}
               getAriaValueText={valuetext}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
+              onChange={handleChangeNbrTags}
               step={1}
               marks
-              min={1}
-              max={10}
+              min={0}
+              max={5}
               color="secondary"
             />
           </Grid>
+          <Grid item xs={12} lg={2}>
+            <h6 style={{ color: "#C51162" }}>Tags</h6>
+            <Select
+              isMulti
+              isClearable={false}
+              onChange={handleChangeTags}
+              options={selectTags}
+            />
+          </Grid>
+          <Grid item xs={12} lg={5}>
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              color="secondary"
+              variant="contained"
+              className="filterBtn"
+            >
+              <h6>
+                <i className="fas fa-filter"></i> Filter
+              </h6>
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item sm={12} style={{ height: 50 }}></Grid>
-        <Grid item container sm={12}>
-          {imgs
-            .filter(filter)
-            .map((img, i) => (
-              <Cards image={img} key={i} rating={rating} />
-            ))}
+        <Grid item container xs={12} justify="center" alignItems="center" style={{ marginTop: 20}}>
+          {users.status === "success"
+            ? users.users.map((user, i) => (
+                <Cards
+                  user={user}
+                  handleLike={handleLike}
+                  handleViewProfile={handleViewProfile}
+                  handleBlock={handleBlock}
+                  handleDislike={handleDislike}
+                  handleReport={handleReport}
+                  key={i}
+                />
+              ))
+            : ""}
         </Grid>
       </Grid>
     </>

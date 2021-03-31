@@ -1,87 +1,122 @@
-import React from 'react';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Infos from './infos';
-import Photos from './photos';
-import Localisation from './Localisation';
+import React from "react";
 import "./profile.css";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Navbar from "../../containers/Navbar";
 
-function getSteps() {
-  return ['Information', 'Photos', 'Localisation'];
-}
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <Infos />;
-    case 1:
-      return <Photos />;
-    case 2:
-      return <Localisation />;
-    default:
-      return 'Unknown step';
-  }
-}
-
-export default function Profile() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const steps = getSteps();
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
+export default function Profile(props) {
+  const { user, images, resetStep } = props;
   return (
-    <div className="profileContainer">
-      <Stepper activeStep={activeStep} orientation="vertical" className="stepperContainer">
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepLabel className="stepLabel">{label}</StepLabel>
-            <StepContent>
-              <Typography>{getStepContent(index)}</Typography>
-              <div >
-                <div>
-                  <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    color="secondary"
+    <>
+      <Navbar />
+      <Grid
+        container
+        className="profilContainer"
+        justify="center"
+        alignItems="center"
+      >
+        <Grid item xs={11} lg={7} container className="profileContainer">
+          <Grid
+            item
+            xs={12}
+            lg={4}
+            className="profileImageContainer"
+            container
+            justify="center"
+            alignItems="center"
+          >
+              <Grid
+                item
+                xs={10}
+                className="profileUserImage"
+                style={{ marginBottom: "20px" }}
+              >
+                {images.isImages &&
+                  images.images.map((tile) => {
+                    return (
+                      <Grid key={tile.id}>
+                        {tile.isProfilePic ? (
+                          <img
+                            style={{
+                              width: "100%",
+                              height: "25vh",
+                              borderRadius: "5px",
+                            }}
+                            src={`http://localhost:3001/${tile.path}`}
+                            alt="photos"
+                          />
+                        ) : null}
+                      </Grid>
+                    );
+                  })}
+              </Grid>
+              <Grid item xs={11} className="profileFullName">
+                <h1>{user.firstname + " " + user.lastname}</h1>
+                <h3>{user.username}</h3>
+                <h4 style={{textAlign: 'center', display: 'flex', flexDirection: 'wrap'}}>
+                  <i className="fas fa-venus-mars"></i>&nbsp;Gender:&nbsp; <p style={{ color: "dimgrey"}}>{user.gender}</p>
+                </h4>
+                <h4 style={{textAlign: 'center', display: 'flex', flexDirection: 'wrap'}}>
+                  <i className="far fa-grin-hearts"></i>&nbsp;Interest: &nbsp; <p style={{ color: "dimgrey"}}>{user.Sexual_orientation}</p>
+                </h4>
+                <h4 style={{textAlign: 'center', display: 'flex', flexDirection: 'wrap'}}>
+                  <i className="fas fa-baby-carriage"></i>&nbsp;Age: &nbsp; <p style={{ color: "dimgrey"}}>{user.age}</p> 
+                </h4>
+                <h4 style={{textAlign: 'center', display: 'flex', flexDirection: 'wrap'}}>
+                  <i className="fas fa-book"></i>&nbsp;Bio:&nbsp;<p style={{ color: "dimgrey"}}>{user.biography}</p> 
+                </h4>
+                <h4 style={{textAlign: 'center', display: 'flex', flexDirection: 'wrap'}}>
+                <i className="fab fa-slack-hash"></i>&nbsp;Tags:&nbsp;
+                  {user.tags.map((tag, i) => (
+                      <p  key={i} style={{color: "dimgrey", marginTop: '6px'}}>#{tag.label}&nbsp;</p>
+                  ))}
+                </h4>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="loginBtn"
+                  type="submit"
+                  value="ok"
+                  onClick={resetStep}
+                  style={{ marginTop: "10px" }}
+                >
+                  Edit
+                </Button>
+              </Grid>
+          </Grid>
+
+          <Grid item container xs={12} lg={8} className="profileInputContainer">
+            {images.isImages &&
+              images.images.map((tile) => {
+                return (
+                  <Grid
+                    item
+                    sm={4}
+                    key={tile.id}
+                    style={{
+                      display: "inline",
+                      float: "left",
+                      padding: "10px",
+                    }}
                   >
-                    Back
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleNext}
-                  >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
-              </div>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-      {activeStep === steps.length && (
-        <Paper square elevation={0} className="finish">
-          <Typography>Congratulations you finish</Typography>
-          <Button onClick={handleReset} color="secondary">
-            Reset
-          </Button>
-        </Paper>
-      )}
-    </div>
+                    <img
+                      style={{
+                        width: "100%",
+                        height: "25vh",
+                        borderRadius: "12px",
+                        margin: "2px",
+                        boxShadow: "0px 10px 30px -5px rgba(0, 0, 0, 0.3)",
+                        objectFit: "cover",
+                      }}
+                      src={`http://localhost:3001/${tile.path}`}
+                      alt="photos"
+                    />
+                  </Grid>
+                );
+              })}
+          </Grid>
+        </Grid>
+      </Grid>
+    </>
   );
 }
